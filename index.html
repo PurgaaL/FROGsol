@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/png" href="images/frog.png">
+    <link rel="shortcut icon" type="image/png" href="images/frog.png">
+    <link rel="apple-touch-icon" href="images/frog.png">
+</head>
+<body>
+    <div class="container">
+        <div class="social-icons">
+            <a href="https://t.me/votre_compte" target="_blank" class="social-link">
+                <img src="images/telegram.png" alt="Telegram" class="social-icon">
+            </a>
+            <a href="https://x.com/votre_compte" target="_blank" class="social-link">
+                <img src="images/x-logo.png" alt="X" class="social-icon">
+            </a>
+        </div>
+        <form id="passwordForm" onsubmit="checkPassword(event)">
+            <input type="password" id="password" placeholder="Enter the fucking password" required>
+            <br>
+            <button type="submit">RIBBIT RIBBIT MOTHERFUCKER</button>
+        </form>
+    </div>
+
+    <script>
+        function checkPassword(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            if (password === 'FROG') {
+                window.location.href = '/swamp/';
+            } else {
+                showError();
+            }
+        }
+
+        function showError() {
+            // Créer l'overlay rouge
+            const overlay = document.createElement('div');
+            overlay.className = 'error-overlay';
+            document.body.appendChild(overlay);
+
+            // Créer le message d'erreur
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = 'RIBBIT ERROR!';
+            document.body.appendChild(errorMsg);
+
+            // Secouer le conteneur
+            const container = document.querySelector('.container');
+            container.classList.add('shake');
+
+            // Arrêter les grenouilles à leur position actuelle
+            const frogs = document.querySelectorAll('.frog');
+            frogs.forEach(frog => {
+                // Calculer la position actuelle
+                const computedStyle = window.getComputedStyle(frog);
+                const matrix = new WebKitCSSMatrix(computedStyle.transform);
+                
+                // Fixer la position actuelle
+                frog.style.transform = `translate(${matrix.m41}px, ${matrix.m42}px)`;
+                
+                // Ajouter l'animation d'erreur
+                frog.classList.add('error');
+            });
+
+            // Nettoyer après l'animation
+            setTimeout(() => {
+                overlay.remove();
+                errorMsg.remove();
+                container.classList.remove('shake');
+                frogs.forEach(frog => {
+                    frog.classList.remove('error');
+                    // Ne pas réinitialiser la position
+                    // Redémarrer l'animation depuis la position actuelle
+                    frog.style.animation = 'crazyFrog 8s infinite linear';
+                });
+            }, 1000);
+
+            // Vider le champ de mot de passe
+            document.getElementById('password').value = '';
+        }
+
+        function createFrogs(number) {
+            for (let i = 0; i < number; i++) {
+                const frog = document.createElement('div');
+                frog.className = 'frog';
+                
+                // Position initiale aléatoire
+                frog.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+                frog.style.top = Math.random() * (window.innerHeight - 100) + 'px';
+                
+                // Taille aléatoire entre 50px et 100px
+                const size = 50 + Math.random() * 50;
+                frog.style.width = `${size}px`;
+                frog.style.height = `${size}px`;
+                
+                // Durée d'animation aléatoire entre 5 et 10 secondes
+                frog.style.animationDuration = (5 + Math.random() * 5) + 's';
+                
+                // Direction aléatoire unique pour chaque grenouille
+                frog.style.setProperty('--direction-x', Math.random() > 0.5 ? 1 : -1);
+                frog.style.setProperty('--direction-y', Math.random() > 0.5 ? 1 : -1);
+                
+                // Timing function aléatoire
+                const timings = ['linear', 'ease-in-out', 'ease', 'cubic-bezier(0.4, 0, 0.2, 1)'];
+                frog.style.animationTimingFunction = timings[Math.floor(Math.random() * timings.length)];
+                
+                // Rotation initiale aléatoire
+                frog.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                document.body.appendChild(frog);
+            }
+        }
+
+        window.onload = () => createFrogs(50);
+    </script>
+</body>
+</html>
